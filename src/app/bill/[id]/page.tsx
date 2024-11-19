@@ -1,3 +1,5 @@
+import { StatusBadge } from "./components/StatusBadge";
+
 type Props = {
   params: {
     id: string
@@ -39,9 +41,7 @@ export default function BillPage({ params }: Props) {
           </h1>
 
           <div className="flex gap-4 mb-6">
-            <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">
-              {bill.status}
-            </span>
+            <StatusBadge status={bill.status} />
             <span className="text-gray-500 text-sm">
               Last updated: {bill.lastUpdated}
             </span>
