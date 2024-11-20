@@ -1,9 +1,27 @@
 import axios from 'axios';
-import { Bill } from './types';
+
+interface BillResponse {
+  bill: Bill;
+}
+
+interface Bill {
+  base_name: string;
+  origin_chamber: string; // should be either "house" or "senate"
+  title: string;
+  name: string; // this looks like HB1001.07.ENRS
+  digest: string;
+  short_description: string;
+}
+
+interface BillList {
+  name: string;
+  base_name: string;
+  chamber: string; // should be either "house" or "senate"
+}
 
 // Define interfaces for the API response
 interface BillsResponse {
-  items: Bill[];
+  bills: BillList[];
   itemCount: number;
 }
 
@@ -11,17 +29,19 @@ interface BillsResponse {
 const api = axios.create({
   baseURL: process.env.REACT_APP_IGA_API_URL,
   headers: {
-    'Accept': 'application/json',
-    'x-api-key':`${process.env.REACT_APP_IGA_API_TOKEN}`,
-    'User-Agent': `iga-api-client-Token ${process.env.REACT_APP_IGA_API_TOKEN}`,
+    'Content-Type': 'application/json',
   },
 });
 
 // Session parameter should be the year (e.g. "2024")
 export const getAllBills = async (session: string) => {
   try {
-    const response = await api.get<BillsResponse>(`/${session}/bills`);
-    return response.data.items;
+    const response = await api.get<BillsResponse>('/getBills', {
+      params: {
+        session_lpid: `session_${session}`
+      }
+    });
+    return response.data.bills;
   } catch (error) {
     console.error('Error fetching bills:', error);
     throw error;
@@ -30,11 +50,21 @@ export const getAllBills = async (session: string) => {
 
 export const getBill = async (session: string, billName: string) => {
   try {
-    console.log(`/${session}/bills/${billName}`)
-    const response = await api.get<Bill>(`/${session}/bills/${billName}`);
-    return response.data;
+    const session_lpid = `session_${session}`;
+    const response = await api.get<BillResponse>(`/getBillDetails`, {
+      params: {
+        session_lpid,
+        bill_basename: billName
+      }
+    });
+    return response.data.bill;
   } catch (error) {
     console.error('Error fetching bill:', error);
     throw error;
   }
 };
+
+export const getLatestBillPdfUrl = async (session: string, billName: string) => {
+  const bill = await getBill(session, billName)
+  return `${process.env.IN_GOV_WEBSITE_URL}/pdf-documents/123/${session}/${bill.origin_chamber}/bills/${billName}/${bill.name}.pdf`
+}
