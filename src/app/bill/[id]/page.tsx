@@ -1,15 +1,10 @@
 import { StatusBadge } from "./components/StatusBadge";
+import Link from "next/link";
 
-type Props = {
-  params: {
-    id: string
-  }
-}
-
-export default function BillPage({ params }: Props) {
+export default async function BillPage({params}: {params: Promise<{id: string}>}) {
   // This would eventually come from your API/Lambda
   const bill = {
-    id: params.id,
+    id: (await params).id,
     title: "HB 1001 - State Budget",
     summary: `This bill appropriates money for capital expenditures, the operation of the state,
     K-12 and higher education, public safety, and various other expenses.
@@ -28,12 +23,12 @@ export default function BillPage({ params }: Props) {
   return (
     <div className="min-h-screen bg-gray-50">
       <main className="max-w-4xl mx-auto px-4 py-8">
-        <a
+        <Link
           href="/"
           className="text-blue-700 hover:text-blue-900 mb-6 inline-block"
         >
           ← Back to all bills
-        </a>
+        </Link>
 
         <article className="bg-white p-8 rounded-lg shadow-sm">
           <h1 className="text-3xl font-bold mb-4 text-gray-900">

@@ -61,12 +61,7 @@ export interface Version {
   conferees: Legislator[];
   subjects: Subject[];
   link: string;
-  amendments: any[];
-  floor_amendments: any[];
-  cmte_amendments: any[];
-  drafts: any[];
   'fiscal-notes': FiscalNote[];
-  'committee-reports': any[];
   rollcalls: RollCall[];
 }
 

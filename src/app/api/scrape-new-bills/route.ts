@@ -1,6 +1,6 @@
 import { getAllBills, getBill } from "@/services/legislativeApi"
 
-export async function GET(request: Request) {
+export async function GET() {
   const bills = await getAllBills("2024")
   const bill = await getBill("2024", bills[0].billName)
 

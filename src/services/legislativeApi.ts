@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { Bill } from './types';
 
 // Define interfaces for the API response

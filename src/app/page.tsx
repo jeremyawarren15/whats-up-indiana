@@ -18,7 +18,7 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50">
       <main className="max-w-4xl mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8 text-center text-gray-900">
-          What's Up, Indiana?
+          What&apos;s Up, Indiana?
         </h1>
 
         <div className="space-y-6">
