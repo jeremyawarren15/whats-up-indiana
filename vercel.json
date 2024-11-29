@@ -1,7 +1,7 @@
 {
   "crons": [
     {
-      "path": "/api/cron/scrape",
+      "path": "/api/scrape-new-bills",
       "schedule": "0 0 * * *"
     }
   ]

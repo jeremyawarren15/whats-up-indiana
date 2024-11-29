@@ -1,7 +1,11 @@
 import { StatusBadge } from "./components/StatusBadge";
 import Link from "next/link";
 
-export default async function BillPage({params}: {params: Promise<{id: string}>}) {
+export default async function BillPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   // This would eventually come from your API/Lambda
   const bill = {
     id: (await params).id,
@@ -43,9 +47,7 @@ export default async function BillPage({params}: {params: Promise<{id: string}>}
           </div>
 
           <div className="prose prose-gray max-w-none">
-            <p className="text-gray-800 whitespace-pre-line">
-              {bill.summary}
-            </p>
+            <p className="text-gray-800 whitespace-pre-line">{bill.summary}</p>
           </div>
         </article>
       </main>
